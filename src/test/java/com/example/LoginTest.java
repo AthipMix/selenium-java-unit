@@ -1,5 +1,7 @@
 package com.example;
 
+import java.time.Duration;
+
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 class LoginTest {
 
@@ -44,7 +48,7 @@ class LoginTest {
         assertEquals("Welcome!", heading);
     }
 
-    @Test 
+    @Test
     void shouldLoginRequireUser() {
         driver.get("https://seleniumbase.io/simple/login");
 
@@ -57,12 +61,21 @@ class LoginTest {
         assertEquals("The Username is Required!", heading);
 
     }
+
     @Test
     void shouldLoginRequirePassword() {
         driver.get("https://seleniumbase.io/simple/login");
 
-        driver.findElement(By.id("username"))
-                .sendKeys("demo_user");
+        WebDriverWait wait = new WebDriverWait(
+                driver,
+                Duration.ofSeconds(10)
+        );
+
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.id("username")
+                )
+        ).sendKeys("demo_user");
 
         driver.findElement(By.id("log-in"))
                 .click();
@@ -73,6 +86,7 @@ class LoginTest {
         assertEquals("The Password is Required!", heading);
 
     }
+
     @Test
     void shouldInvalidUsername() {
         driver.get("https://seleniumbase.io/simple/login");
@@ -88,5 +102,5 @@ class LoginTest {
 
         assertEquals("Invalid Username!", heading);
 
-    } 
-}     
+    }
+}
