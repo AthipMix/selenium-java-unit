@@ -43,4 +43,50 @@ class LoginTest {
 
         assertEquals("Welcome!", heading);
     }
-}
+
+    @Test 
+    void shouldLoginRequireUser() {
+        driver.get("https://seleniumbase.io/simple/login");
+
+        driver.findElement(By.id("log-in"))
+                .click();
+
+        String heading = driver.findElement(By.tagName("h6"))
+                .getText();
+
+        assertEquals("The Username is Required!", heading);
+
+    }
+    @Test
+    void shouldLoginRequirePassword() {
+        driver.get("https://seleniumbase.io/simple/login");
+
+        driver.findElement(By.id("username"))
+                .sendKeys("demo_user");
+
+        driver.findElement(By.id("log-in"))
+                .click();
+
+        String heading = driver.findElement(By.tagName("h6"))
+                .getText();
+
+        assertEquals("The Password is Required!", heading);
+
+    }
+    @Test
+    void shouldInvalidUsername() {
+        driver.get("https://seleniumbase.io/simple/login");
+
+        driver.findElement(By.id("username"))
+                .sendKeys("demo");
+
+        driver.findElement(By.id("log-in"))
+                .click();
+
+        String heading = driver.findElement(By.tagName("h6"))
+                .getText();
+
+        assertEquals("Invalid Username!", heading);
+
+    } 
+}     
