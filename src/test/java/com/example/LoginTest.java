@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,7 +19,17 @@ class LoginTest {
 
     @BeforeEach
     void setUp() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        if (Boolean.getBoolean("headless")) {
+
+            options.addArguments("--headless=new");
+
+            options.addArguments("--window-size=1920,1080");
+
+        }
+
+        driver = new ChromeDriver(options);
     }
 
     @AfterEach
